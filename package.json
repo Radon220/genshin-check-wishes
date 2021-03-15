@@ -1,0 +1,26 @@
+{
+  "name": "genshin-check-wishes",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js -e js,hbs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Radon220/genshin-check-wishes.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Radon220/genshin-check-wishes/issues"
+  },
+  "homepage": "https://github.com/Radon220/genshin-check-wishes#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "hbs": "^4.1.1",
+    "postman-request": "^2.88.1-postman.28"
+  }
+}
