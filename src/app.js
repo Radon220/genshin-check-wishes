@@ -2,6 +2,8 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 
+const checkWishBeginner = require('./utils/checkWishBeginner.js')
+
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -22,6 +24,41 @@ app.get('',(req,res)=>{
     res.render('index',{
         title:'Wishes',
         name:"Radon"
+    })
+})
+
+app.get('/help',( req, res )=>{
+    res.render('help',{
+        title: "Help page",
+        name:"Radon"
+    })
+});
+
+app.get('/wish/beginner',( req, res )=>{
+    if(!req.query.address){
+        return res.send({
+            error:"location needed"
+        })
+    }
+    address = req.query.address;
+
+    checkWishBeginner(address, (error,results = {}) =>{
+        if(error){
+            return res.send({
+                error
+            });
+        }
+
+       res.send(results);
+    })
+
+});
+
+app.get('*',(req,res)=>{ //404 has to be last
+    res.render('errorPage',{
+        title: "Error 404",
+        name:"Radon",
+        errorMsg:"Page"
     })
 })
 
