@@ -40,7 +40,7 @@ app.get('/help',( req, res )=>{
 app.get('/wish/beginner',( req, res )=>{
     if(!req.query.address){
         return res.send({
-            error:"location needed"
+            error:"link needed"
         })
     }
     address = req.query.address;
@@ -59,13 +59,14 @@ app.get('/wish/beginner',( req, res )=>{
 app.get('/wish/stand',( req, res )=>{
     if(!req.query.address){
         return res.send({
-            error:"location needed"
+            error:"link needed"
         })
     }
     address = req.query.address;
 
     checkWishStand(address, (error,results = {}) =>{
         if(error){
+            console.log(error);
             return res.send({
                 error
             });
@@ -104,9 +105,7 @@ app.get('/wish/weapon',( req, res )=>{
 
     checkWishWeapon(address, (error,results = {}) =>{
         if(error){
-            return res.send({
-                error
-            });
+            return res.send(error);
         }
 
        res.send(results);

@@ -8,22 +8,29 @@ const checkWishWeapon = async (authCode,callback)=>{
     var page = 1 
 
     while(checking){
-        if(page === 1){
-            bannerArray = await checkWish(authCode,page)
-            //console.log(bannerArray);
-            page++
+        if(await checkWish(authCode,page) == null){
+            callback(undefined,bannerArray)
         }
         else{
-            let tempArray = []
-            tempArray =  await checkWish(authCode,page)
-            if(tempArray.length != 0){
-                bannerArray =  bannerArray.concat(tempArray)
+            if(page === 1){
+                bannerArray = await checkWish(authCode,page)
+                //console.log(bannerArray);
                 page++
             }
             else{
-                checking = false;
-                console.log('stopped w');
-                callback(undefined,bannerArray)
+                let tempArray = []
+                tempArray =  await checkWish(authCode,page)
+                
+                if(tempArray.length > 1){
+                    bannerArray =  bannerArray.concat(tempArray)
+                    page++
+                    //console.log(bannerArray);
+                }
+                else{
+                    checking = false;
+                    console.log('stopped s');
+                    callback(undefined,bannerArray)
+                }
             }
         }
     }
@@ -38,8 +45,9 @@ function checkWish(authCode,page){
         
         
         request({ url,json:true}, (error,response)=>{
-            if (error){
-                console.log(error);
+            if (error || response.body.data == null){
+                //console.log(error);
+                resolve(error)
             }
             else{
                 //console.log(response.body);
@@ -52,6 +60,8 @@ function checkWish(authCode,page){
             //console.log("running");
             resolve(bannerArray)
         })
+
+    }).catch((error)=>{
 
     })
     
