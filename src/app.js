@@ -3,6 +3,9 @@ const express = require('express');
 const hbs = require('hbs');
 
 const checkWishBeginner = require('./utils/checkWishBeginner.js')
+const checkWishStand = require('./utils/checkWishStand.js')
+const checkWishChar = require('./utils/checkWishChar.js')
+const checkWishWeapon = require('./utils/checkWishWeapon.js')
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -43,6 +46,63 @@ app.get('/wish/beginner',( req, res )=>{
     address = req.query.address;
 
     checkWishBeginner(address, (error,results = {}) =>{
+        if(error){
+            return res.send({
+                error
+            });
+        }
+
+       res.send(results);
+    })
+
+});
+app.get('/wish/stand',( req, res )=>{
+    if(!req.query.address){
+        return res.send({
+            error:"location needed"
+        })
+    }
+    address = req.query.address;
+
+    checkWishStand(address, (error,results = {}) =>{
+        if(error){
+            return res.send({
+                error
+            });
+        }
+
+       res.send(results);
+    })
+
+});
+app.get('/wish/char',( req, res )=>{
+    if(!req.query.address){
+        return res.send({
+            error:"location needed"
+        })
+    }
+    address = req.query.address;
+   // console.log(address);
+    checkWishChar(address, (error,results = {}) =>{
+        if(error){
+            return res.send({
+                error
+            });
+        }
+
+       res.send(results);
+    })
+
+});
+app.get('/wish/weapon',( req, res )=>{
+    if(!req.query.address){
+        return res.send({
+            error:"location needed"
+        })
+    }
+    address = req.query.address;
+
+    checkWishWeapon(address, (error,results = {}) =>{
         if(error){
             return res.send({
                 error
